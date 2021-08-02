@@ -30,22 +30,22 @@ function Instructions () {
   )
 }
 
-function PlayerInput({ onSubmit }) {
-  const [username, setUsername] = React.useState('')
+function PlayerInput({ onSubmit, label }) {
+  const usernameRef = React.useRef()
   const { theme } = React.useContext(ThemeContext)
 
   const handleSubmit = (event) => {
     event.preventDefault()
 
+    const username = usernameRef.current.value
+
     onSubmit(username)
   }
-
-  const handleChange = event => setUsername(event.target.value)
 
   return (
     <form className='column player' onSubmit={handleSubmit}>
       <label htmlFor='username' className='player-label'>
-        {this.props.label}
+        {label}
       </label>
       <div className='row player-inputs'>
         <input
@@ -54,13 +54,12 @@ function PlayerInput({ onSubmit }) {
           className={`input-${theme}`}
           placeholder='github username'
           autoComplete='off'
-          value={this.state.username}
-          onChange={this.handleChange}
+          ref={usernameRef}
         />
         <button
           className={`btn ${theme === 'dark' ? 'light-btn' : 'dark-btn'}`}
           type='submit'
-          disabled={!this.state.username}
+          disabled={!usernameRef}
         >
           Submit
         </button>

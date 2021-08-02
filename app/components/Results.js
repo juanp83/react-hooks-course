@@ -47,14 +47,14 @@ ProfileList.propTypes = {
   profile: PropTypes.object.isRequired,
 }
 
-export default function Results() {
+export default function Results({ location }) {
   const [winner, setWinner] = React.useState(null)
   const [loser, setLoser] = React.useState(null)
   const [error, setError] = React.useState(null)
   const [loading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
-    const { playerOne, playerTwo } = queryString.parse(this.props.location.search)
+    const { playerOne, playerTwo } = queryString.parse(location.search)
 
     battle([ playerOne, playerTwo ])
       .then((players) => {
@@ -67,7 +67,7 @@ export default function Results() {
         setError(message)
         setLoading(false)
       })
-  }, [playerOne, playerTwo])
+  }, [])
 
   if (loading === true) {
     return <Loading text='Battling' />
